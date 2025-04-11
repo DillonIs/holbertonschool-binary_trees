@@ -12,7 +12,8 @@
 binary_tree_t *binary_tree_uncle(binary_tree_t *node)
 {
 	binary_tree_t *parent = NULL, *grandp = NULL;
-	if (node->parent == NULL)
+
+	if (node->parent == NULL || node == NULL)
 	{
 		return (NULL);
 	}
