@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "binary_trees.h"
-
-size_t height(const binary_tree_t *tree);
+#include "9-binary_tree_height.c"
+#include "12-binary_tree_leaves.c"
 /**
  * binary_tree_is_perfect - Checks if binary tree is perfect
  * @tree: Pointer to root node
@@ -12,78 +12,27 @@ size_t height(const binary_tree_t *tree);
 
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
-	size_t _height = height(tree);
-	int perfect = 1;
-	int left;
-	int right;
+	int leavesleft = 0;
+	int leavesright = 0;
+	int left = 0;
+	int right = 0;
 
 	if (tree == NULL)
 	{
 		return (0);
 	}
-	if (!_height)
+
+	left = binary_tree_height(tree->left);
+	right = binary_tree_height(tree->right);
+
+	if (left != right)
 	{
 		return (0);
 	}
 
-	left = binary_tree_is_perfect(tree->left);
-	right = binary_tree_is_perfect(tree->right);
-
-	if (!left && !right)
-	{
-		return (1);
-	}
-
-	if (!left || !right)
-	{
-		return (0);
-	}
-
-	perfect = left;
-	if (perfect == 0)
-	{
-		return (0);
-	}
+	leavesleft = binary_tree_leaves(tree->left);
+	leavesright = binary_tree_leaves(tree->right);
 
 
-	return (perfect && right);
-}
-
-size_t max(size_t a, size_t b);
-/**
- * height - Finds height of binary tree
- * @tree: Pointer to root node
- *
- * Return: Returns height of binary tree
- */
-size_t height(const binary_tree_t *tree)
-{
-	int heightleft;
-	int heightright;
-
-	if (!tree || (!tree->left && !tree->right))
-	{
-		return (0);
-	}
-	heightleft = height(tree->left);
-	heightright = height(tree->right);
-
-	return (max(heightleft, heightright) + 1);
-}
-
-/**
- * max - Returns the bigger of two numbers
- * @a: Value of first number
- * @b: Value of second number
- *
- * Return: Returns the max of a and b
- */
-
-size_t max(size_t a, size_t b)
-{
-	if (a > b)
-	{
-		return (a);
-	}
-	return (b);
+	return (leavesleft == leavesright);
 }
